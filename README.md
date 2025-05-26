@@ -338,10 +338,16 @@
 ### 프론트엔드 활용
 - HTML5 + CSS3 + JS + BootStrap 응용예제
     - Bootstrap Image Gallery
+  
+
+    https://github.com/user-attachments/assets/07ec10a1-2122-46ec-a1d2-9dd742062fe6
+
 
 ## 4일차
 
 ### 프론트엔드 활용
 - HTML5 + CC3 + JS 응용예제
+
+  
 
 ### ASP.NET Core
