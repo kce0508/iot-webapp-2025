@@ -378,7 +378,7 @@
         - div, blog_section
     - div, footer
 8. 태그 내에 Bootstrap 클래스 적용
-9. Bootstrap Example의 테마 사용
+9. Bootstrap Example의 테마 적용
 10. 전체화면
 
     https://github.com/user-attachments/assets/054ac7e1-6deb-4a34-a1e5-7336c580601a
