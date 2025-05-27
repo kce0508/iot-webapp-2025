@@ -381,5 +381,7 @@
 9. Bootstrap Example의 테마 사용
 10. 전체화면
 
+    https://github.com/user-attachments/assets/054ac7e1-6deb-4a34-a1e5-7336c580601a
+
 ### ASP.NET Core
 - 웹 서버 기술
