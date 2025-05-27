@@ -10,7 +10,7 @@
 - 2014년 이후 HTML5로 적용되고 있음
 
 #### 웹 기술
-- 웹 표준기술(프론트엔드) : HTML5(웹 페이지 구조) + CSS3(디자인) + JavaScript (인터렉티브)
+- 웹 표준기술(프론트엔드) : HTML 5(웹 페이지 구조) + CSS 3(디자인) + JavaScript (인터렉티브)
 - 웹 `서버`기술(백엔드) : ASP.NET Core(C#|VB), SpringBoot(Java), Flask|dJango(Python), CGI(PHP, C), Ruby, ...
 - 웹 서비스 : 프론트엔드 + 백엔드
 - 웹 브라우저 상에서 동작 : 현재는 웹 브라우저 상에서만 동작하는 경계가 사라졌음
@@ -82,6 +82,7 @@
 - table을 여러번 중복하면 렌더링 속도 저하로 화면이 빨리 표시가 안됨
 - 웹 기술 표준을 적용해서 div 태그로 공간분할을 시작
 - div를 CSS로 디자인 적용해서 렌더링 속도를 빠르게 변경
+- 게시판 목록, 상세보기 등에서는 아직도 table을 사용 중
 
 #### 시멘틱웹
 - 웹구조를 좀더 구조적으로 세밀하게 구분짓는 의미로 만들어진 웹 구성방식
@@ -105,7 +106,7 @@
     ```
 - html 태그 속성
     - id : 웹페이지 하나당 한번만 쓸것
-    - class : 여러번 사용가능
+    - class : 여러번, 여러개 사용가능
 
 - UI기술로 많은 분야에서 사용
     - Qt, PyQt, Electron, Flutter(모바일), React Native(모바일), React.js, ...
@@ -270,7 +271,7 @@
     - Extra large : xl (>= 1200px)
     - Extra extra large : xxl (>= 1400px)
 
-- 컨테이너 : 기본 레이아웃에서 가장 중요!
+- 컨테이너 : 기본 레이아웃에서 가장 중요! 그리드 스타일이라고 부름
     - container - 일반적인 넓이 사용. 양쪽에 여백이 존재
     - container-fluid - 여백없이 웹페이지를 꽉채우는 스타일
     - container > row > col 형식으로 사용
@@ -338,7 +339,6 @@
 ### 프론트엔드 활용
 - HTML5 + CSS3 + JS + BootStrap 응용예제
     - Bootstrap Image Gallery
-  
 
     https://github.com/user-attachments/assets/07ec10a1-2122-46ec-a1d2-9dd742062fe6
 
@@ -347,7 +347,39 @@
 
 ### 프론트엔드 활용
 - HTML5 + CC3 + JS 응용예제
+- Modern Business 템플릿 클로닝
+    - https://startbootstrap.com/template/modern-business
 
-  
+    <img src="./image/web0006.png" width="700">
+
+    - 압축파일 다운로드 후 압축 해제
+
+#### HTML5 Responsive Web template
+- https://html5up.net/
+
+#### Modern Business 클로닝
+1. 모든 웹페이지 시작은 index.* (.html, .asp, .jsp, .cshtml...)
+2. 폴더 구성 : css, js, assets
+3. favicon.ico 구성
+4. Bootstrap 다운로드 후 폴더에 구성(not CDN)
+    - bootstrap-5.3.6-dist.zip
+5. Bootstrap Icon 링크 클릭 다운로드
+    - https://github.com/twbs/icons/releases/tag/v1.13.1
+    - bootstrap-icons-1.13.1.zip
+    - css 폴더 아래 fonts 폴더 생성
+    - bootstrap-icons.woff, bootstrap-icons.woff2 붙여넣기
+6. body 마지막 Bootstrap js 링크 추가 
+7. body 내의 태그영역으로 나눠서 클로닝
+    - div, main
+        - div, nav
+        - div, header
+        - div, feature
+        - div, testimonial
+        - div, blog_section
+    - div, footer
+8. 태그 내에 Bootstrap 클래스 적용
+9. Bootstrap Example의 테마 사용
+10. 전체화면
 
 ### ASP.NET Core
+- 웹 서버 기술
