@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using MyPortfolioWebApp.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using WebApp01.Models;
 
-namespace MyPortfolioWebApp.Controllers
+namespace WebApp01.Controllers
 {
     public class HomeController : Controller
     {
@@ -23,6 +22,12 @@ namespace MyPortfolioWebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -73,6 +73,7 @@
 - img, audio, video : 이미지, 오디오, 비디오 
 - [소스](./day01/html05.html), [소스](./day01/html06.html)
 - form, input, button, select, textarea, label : 입력양식, 텍스트박스, 버튼, 콤보박스, 여러줄텍스트박스, 라벨
+    - form action에 `get`과 `post`. (dialog)
 - progress : 진행률
 - div, span : 공간분할
 
@@ -383,7 +384,7 @@
 
     https://github.com/user-attachments/assets/054ac7e1-6deb-4a34-a1e5-7336c580601a
 
-### 5일차
+## 5일차
 
 ### 웹 계발 기술 용어
 - SPA : Single Page Applicaiton. 페이지를 이동해도 새로고침 없이 한페이지에서 작동하는 웹
@@ -545,14 +546,83 @@
     
     <img src="./image/web0013.png" width="600">
 
-## 5일차
+## 6일차
 
 ### ASP.NET Core
 
-#### SP.NET Core MVC - Kelly Portfolio 디자인 클로닝(계속)
+#### ASP.NET Core MVC - Kelly Portfolio 디자인 클로닝(계속)
+1. Properties> launchSettgins.json
+    - hotReloadEnabled 설정키 추가
+2. _Layout.cshtml 작업 계속
+    - head, nav, footer, script영역 공통부분
+    - main.js 소스를 site.js로 복사/붙여넣기
+    - 원본 head의 google font 태그 그대로 사용
+    - ASP.NET Core에서 생성한 주석처리
+3. 원본 이미지 등 정적 리소스를 변경시 반영안되는 경우
+    - 웹 브라우저에 캐시가 남아있기 때문
+    - 웹 브라우저 설정 > 개인정보 보호 및 보안 > 인터넷 사용기록 및 삭제 > 전체 삭제
+    - 웹 브라우저가 없는 리소스는 재다운로드
+
+4. HomeController에 About 메서드 생성
+    - 뷰 추가
+    - ASP.NET Core 링크 asp-controller, asp-action 속성을 사용해야
+5. About.cshtml부터 Contact.cshtml까지
+    - CSS부터 적용
+6. DB 연동
+    - NuGet 패키지
+        - Bogus(Python Faker 라이브러리)
+        - `Microsoft.EntityFrameworkCore` 8.0.x
+        - `Microsoft.EntityFrameworkCore.Tools` 8.0.x
+        - `Pomelo.EntityFramworkCore.MySql` 8.0.3
+        - EntityFramworkCore는 전부 Version Major 숫자가 일치해야함(현재 8버전)
+    - EntityFramwork Code First 방식
+        - DB를 잘 몰라도 웹개발 가능하도록 만든 기술
+    - Model > News 클래스 생성
+    - appsettings.json, DB 연결문자열 추가
+    - Model > ApplicationDbContext 클래스 생성
+    - Program.cs에서 초기화 설정에 DB연결을 추가
+    - 도구 > NuGet패키지 관리자 > 패키지 관리자 콘솔로 진입. 아래의 1, 2번 명령어를 순차적 실행
+
+        ```shell
+        PM1> add-migration AddNewsToDatabase
+        Build started...
+        Build succeeded.
+        To undo this action, use Remove-Migration.
+        PM2> update-database
+        Build started...
+        ...
+        Build succeeded.
+        ...
+        Done.
+        PM>
+        ```
+    - MySQL Workbench 해당 스키마(DB)에 News 테이블 생성 확인, 더미데이터 입력
+    - NewsController 클래스 생성
+    - Entity Framework를 사용하여 뷰가 포함된 MVC 컨트롤러 선택
+
+    <img src="./image/web0014.png" width="600">
+
+7. Controller 설명
+    - CRUD 중
+        - SELECT는 GET 메서드만 존재
+        - 데이터가 처리되면 INSERT, UPDATE, DELETE 기능에는 GET, POST 메서드 둘 다 필요
+        - form 태그의 `asp-action`이 POST 메서드
+
+8. 개발콘솔에서 CRUD 로그 확인
+
+    <img src="./image/web0015.png" width="600">
+
+9. 작업화면
 
 
+## 7일차
 
+### ASP.NET Core
+
+#### ASP.NET Core MVC - Kelly Portfolio 디자인 클로닝(계속)
+- 뉴스, 게시판 완료
+- 한글화
+- 마무리
 
 
 

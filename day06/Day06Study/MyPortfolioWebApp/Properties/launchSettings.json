@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:26927",
+      "applicationUrl": "http://localhost:61804",
       "sslPort": 0
     }
   },
@@ -13,17 +13,19 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5094",
+      "applicationUrl": "http://localhost:5234",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "hotReloadEnabled": true   // 핫다시 리로드 항상 실행
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "hotReloadEnabled": true // 핫다시 리로드 항상 실행
     }
   }
 }
