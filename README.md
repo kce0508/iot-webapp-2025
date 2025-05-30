@@ -614,6 +614,7 @@
 
 9. 작업화면
 
+    https://github.com/user-attachments/assets/946b95d4-41c8-42fd-a7e4-1b1becce7a28
 
 ## 7일차
 
