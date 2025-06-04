@@ -763,11 +763,27 @@
 
 #### ASP.NET Core MVC - Kelly Portfolio 클로닝(계속)
 1. 뉴스페이징 완료
-2. 게시판 완료
-3. 정적 페이지 DB연동 
-4. 한글화
-5. 마무리
+    - 페이징 첫페이지, 이전페이지, 다음페이지, 마지막 페이지 링크 추가
+    - Bootstrap 디자인 적용
+2. 검색
+    - 검색 폼 추가
+    - 컨트롤러 Index() 메서드에 검색어 파라미터 추가
+    - 쿼리 변경(카운트 쿼리, 저장프로시저 검색부분)
+    - 페이징 부분 GET메서드에 검색어 파라미터 추가
 
+    <img src="./image/web0024.png" width="600">
 
+3. 한글화
+4. 정적 페이지 DB연동 
+
+    <img src="./image/web0025.png" width="450">
+
+## 10일차
+
+### ASP.NET Core 실습
+
+#### ASP.NET Core MVC - Kelly Portfolio 클로닝 끝
+1. 게시판 준비
+2. 이후 작업
 
 
