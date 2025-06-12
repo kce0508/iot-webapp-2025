@@ -1029,17 +1029,106 @@
 ### ASP.NET Core API 서버(계속)
 
 #### WebAPI 서버 + 웹사이트(계속)
-- 할일 삭제
+- 할일 수정/삭제
+- 실행화면
+
+    <img src="./image/web0034.png" width="600">
+
+- 결론
+    - WebAPI로 백엔드를 운영하면 프론트는 모두 사용가능(윈앱, 웹앱, 모바일앱...)
 
 ### AWS 클라우드 업로드
-- AWS 라이트세일로 웹사이트 업로드
+- 클라우드서비스 사용 : 어디서나 웹사이트 공개
+- 온프레미스 : 직접 서버를 구축. DB서버 구축, 웹서버구축 등 직접 운영
+    - 서버 하드웨어 구매, 서버실 구축, UPS구성, 네트워크 스위치 구성
+    - OS구매, SW구매, 운영환경구성, 개발환경구성
+    - 운영하면 문제 해결, 유지보수
+- 클라우드 : 서버구축 필요없음. DB서버 신청 생성
+    - 서버실 구축x, 하드웨어 구매x, SW구매x, 운영문제 관리x
+    - 최초 구축비용이 들지 않음
+    - 사용료가 저렴하지 않음
+
+- AWS 라이트세일로 웹사이트 업로드 - https://aws.amazon.com/ko/lightsail/
+    - 기존 AWS보다 저렴하게 사용할 수 있는 서비스
+
+#### AWS 라이트세일에 웹서버 올리기
+1. 인스턴스 생성
+    1. Microsoft Windows > Windows Server 2019 >
+    2. 네트워크 듀얼스택
+    3. 크기, 월별 $9.5 선택 `90일 무료`
+    4. 인스턴스 이름
+    5. 인스턴스 생성
+2. 인스턴스 관리 > RDP를 사용하여 연결
+    1. 초기화 대기(네트워크 나올때까지, 1분 가량)
+    2. Network2 허용 Yes 클릭
+    3. Server Manager 오픈
+        - Configure this local server
+        - IE Enhanced Security Config : ON(웹사이트 오픈 불가) -> OFF
+3. 필요 SW 다운로드
+    1. MySQL Installer for Windows
+    2. Chrome browser(option)
+    3. FileZilla FTP Server
+4. MySQL 설치
+    1. Custom 선택
+    2. MySQL Server 8.0.42 - x64 만 선택, 설치 후 Next
+    3. 일반적으로 Next
+    4. Authentication Method > Use Legacy Authentication(Retain MySQL 5.x Compatibility) 선택
+        - 암호 정책이 간결
+        - 대신 AWS는 IP나 공개된 상황이라 간단한 암호하면 절대 안됨
+    5. 나머지는 Next, Execute 실행
+    6. 마지막에 Finish 클릭
+    7. Firewall & Network Protextion 실행 > Advanced setting 선택
+        - Inbound Rules > Port 3306 확인, 없으면 생성
+    8. 라이트세일 인스턴스 관리 > 네트워크
+        - IPv4 방화벽에 규칙 추가
+    9. 
+5. 
+6. Visual Studio 프로젝트 오픈(MyPortfolioWebApp)
+    1. 게시 > FTP/FTPS 선택
+    2. 서버 - ftp://aws-public-ip
+    3. 사이트경로 - /
+    4. 수동
 
 ### 부가적인 기능
 - QAuth(구글 로그인)
 - 파일업로드
-- WebAPI 서버 + 웹사이트 할일 수정
 
 ## MyPortfolio 완성 (코딩테스트)
+- 자유게시판 
+    - 자유롭게 글을 작성하고, 열람 및 관리할 수 있다.
+    - 기능 : 게시글 작성, 목록 조회, 상세 보기, 수정 및 삭제, 게시글 검색
+
+- 화면 구성
+    - 기본 화면
+
+        <>
+
+    1. `게시글 목록` 화면
+        - 게시글을 테이블 형식으로 나열
+        - `작성 버튼`, `검색` 기능, `페이지네이션` 포함
+        - 주요항목 : 이메일, 작성자, 제목, 작성일, 조회수
+        - `검색 기능` 
+            - 상단 검색창에서 키워드 입력 후 검색 버튼 클릭
+            - 게시글 제목에 키워드가 포함된 항목만 필터링
+            - **부분 일치** 검색 가능 (예 : `1` 입력 -> `자유게시판1` 검색됨)
+
+
+        <img src="./코딩테스트/코테 이미지/검색화면-부분검색.png" width="550">
+    
+    2. 게시글 상세 화면
+        - 선택한 게시글의 상세 내용을 출력
+        - 수정, 삭제, 리스트(목록) 버튼 제공
+        - 조회수 표시
+
+        <img src="./코딩테스트/코테 이미지/내용.png" width="550">
+
+    3. 게시글 작성 화면
+        - 사용자가 새 게시글을 작성할 수 있는 입력 폼 제공
+        - 항목 :  이메일, 작성자, 제목, 내용
+        - 작성 완료시 저장 버튼으로 등록, 리스트 버튼으로 목록 이동 가능
+
+        <img src="./코딩테스트/코테 이미지/게시글작성.png" width="550">
+
 
 ## 15일차
 
