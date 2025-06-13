@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyPortfolioWebApp.Models;
@@ -10,6 +11,17 @@ namespace MyPortfolioWebApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // 최대파일 용량 제한
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 200 * 1024 * 1024;
+            });
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.
+            })
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

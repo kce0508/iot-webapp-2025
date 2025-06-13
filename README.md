@@ -1035,7 +1035,7 @@
     <img src="./image/web0034.png" width="600">
 
 - 결론
-    - WebAPI로 백엔드를 운영하면 프론트는 모두 사용가능(윈앱, 웹앱, 모바일앱...)
+    - WebAPI로 백엔드를 운영하면 프론트는 모두 사용가능(윈앱, 웹앱, 모바일앱)
 
 ### AWS 클라우드 업로드
 - 클라우드서비스 사용 : 어디서나 웹사이트 공개
@@ -1048,7 +1048,7 @@
     - 최초 구축비용이 들지 않음
     - 사용료가 저렴하지 않음
 
-- AWS 라이트세일로 웹사이트 업로드 - https://aws.amazon.com/ko/lightsail/
+- AWS 라이트세일 - https://aws.amazon.com/ko/lightsail/
     - 기존 AWS보다 저렴하게 사용할 수 있는 서비스
 
 #### AWS 라이트세일에 웹서버 올리기
@@ -1081,17 +1081,144 @@
         - Inbound Rules > Port 3306 확인, 없으면 생성
     8. 라이트세일 인스턴스 관리 > 네트워크
         - IPv4 방화벽에 규칙 추가
-    9. 
-5. 
+    9. MySQL Workbench 접속 생성/확인
+5. FileZilla FTP 서버 설치
+    1. 설치는 Next로 설치
+    2. 서버 시작 후
+    3. 메뉴 Server > Configure
+        - Server listener의 아이피 0.0.0.0 -> 본인의 내부 서버 아이피로 변경
+    4. 프로토콜 셋팅 > FTP and FTP over TLS 메뉴
+        - Connection Security
+            - Generate new 버튼 클릭 후 OK
+        - Passive Mode
+            - Use custom port range 클릭
+            - From : 55000
+            - To : 55999
+    5. 탐색기 오픈, Website 폴더 생성
+    6. Right Management > Users 사용자 계정 생성
+        - 사용자 생성
+        - Mount points
+            - Virtual Path : /(root)
+            - Native path : 탐색기에서 만든 Website 지정
+    7. Firewall & Network Protection > Advanced setting
+        - Inbound Rules
+        - New Rule
+            - Program FileZilla Server 선택
+            - wjsqn dhvms
+    8. 라이트세일 인스턴스 관리
+        - 네트워크 IPv4 방화벽에서 21, 55000~55999 포트 오픈
+    9. 로컬 PC에 파일질라 클라이언트 설치
+        - 접속확인
+    
 6. Visual Studio 프로젝트 오픈(MyPortfolioWebApp)
     1. 게시 > FTP/FTPS 선택
     2. 서버 - ftp://aws-public-ip
     3. 사이트경로 - /
-    4. 수동
+    4. 수동모드 - 체크
+    5. 사용자이름/패스워드 - FileZilla 서버 설정한 계정
+    6. 연결유효성후 인증서 승인
+7. MySQL Workbench
+    1. Local DB의 데이터베이스 Server > Data Export로 백업
+    2. AWS MySQL Workbench에서 FTP로 전달한 sql을 Server > Data Import로 복구
+    3. 저장 프로시저는 쿼리 복사해서 재실행
+
+
+## 15일차
+
+### AWS 클라우드 업로드
+
+#### 14일차 확인한 문제
+- FileZilla FTP와 연동 VS에서 FTP로 게시할 때 업로드 문제
+- 파일 자체는 업로드 성공, 실패메시지가 리턴
+- 다른 방법
+    - IIS + WebDeploy : 현재 문제 발생
+    - IIS FTP 사용 : 해결 방법
+
+#### AWS 라이트세일 웹서버 올리기(계속)
+1. 인스턴스 진입
+    1. 서비스 오픈 > FileZilla-Server 중지(Startup type Manual)
+    2. Server Manager 실행 -> Add roles and features
+        - Role-based or feature-based installation -> 자기 서버 선택 Next
+        - 아래 기능 설치
+            - WebServer IIS 선택 후 Add Features
+            - Health And Diagnostics -> Logging Tool, Request Monitor 추가 선택
+            - Application Deployment -> ASP.NET 4.8, ISAPI Extenstions, ISAPI Filters 추가 선택
+            - FTP Server 아래 전부 선택
+    3. asp.net core hosting bundle 8.0 웹브라우저 검색
+
+        <img src="./image/web0037.png" width="600">
+
+        - https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+        - aspnetcore-runtime-8.0.17-win-x64.exe 그냥 설치
+    4. dotnet-hosting-8.0.17-win.exe 설치
+        - 콘솔(파워쉘)에서 iisreset 실행
+
+        <img src="./image/web0038.png" width="600">
+
+    5. IIS 서비스
+        - Modules -> `AspNetCoreModuleV2`가 있는지 확인
+        - Add FtpSite...
+            - 이름, 물리적 경로 선택
+            - IP/All Unassigned, Port/21, SSL/Allow SSL 선탠
+            - Authentication : Basic, 사용자 Administrator, 암호는 인스턴스 암호 사용
+            - Authorization : permission, READ/WRITE 둘다 체크
+
+    6. Application Pool 생성
+        - ASPNETCore Pool 생성
+
+        <img src="./image/web0039.png" width="600">
+
+    7. OS방화벽, AWS 인스턴스 방화벽
+        - OS 방화벽에는 21, 1024-65535 전부 오픈
+        - AWS 인스턴스 네트워크도 동일하게 오픈
+
+    8. IIS 서비스
+        - WebSite 생성 > Add Website
+        - SiteName 옆 Application Pool을 Select 버튼, ASPNetCore를 선택!
+
+2. 90일 이후
+    - AWS 라이트세일 내
+    - 비용 발생, 반드시 인스턴스 삭제할 것
+
 
 ### 부가적인 기능
-- QAuth(구글 로그인)
 - 파일업로드
+- QAuth(구글 로그인)
+
+#### 웹사이트 파일 업로드 기능 구현
+1. Model.News
+    - UploadFile 속성 추가
+2. MySQL Workbench
+    - News 테이블 uploadFile 컬럼 추가
+    - 운영중인 테이블에 새 컬럼을 추가하면 `Not Null로 설정 불가`
+3. New_PagingBoard 저장 프로시저 오류 수정
+    - UploadFile 컬럼 추가되어 생기는 오류
+4. Views/News/Create.cshtml
+    - 입력양식에 파일입력 추가
+    - form 태그에 파일 업로드  enctype="multipart/form-data" 속성 추가
+5. wwwroot/upload 폴더 추가
+6. Controller/NewsController.cs
+    - Create() Post 메서드에 파일 파라미터 추가
+    - 파일 저장 로직 추가
+7. Views/News/Details.cshtml, Delete.cshtml 동일
+    - 파일 다운로드 영역 추가
+8. Views/News/Edit.cshtml
+    - 파일 업로드 영역 추가(Create.cshtml과 유사)
+9. Controller/NewsController.cs
+    - Edit() Post 메서드에 파일 파라미터 추가
+    - 파일 저장 로직 처리(Create() 메서드 로직 복사)
+10. VS IIS Express 사용시
+    - 최대 30MB 제약 걸려있음 - ERR_CONNECTION_RESET 발생
+    - 업로드 크기를 제한을 두더라도 최대사이즈는 설정필요
+11. Program.cs
+    - 최대 업로드 크기 설정
+
+    <img src="./image/web0040.png" width="600">
+
+### 전체 마무리
+
+
+
 
 ## MyPortfolio 완성 (코딩테스트)
 - 자유게시판 
@@ -1101,7 +1228,7 @@
 - 화면 구성
     - 기본 화면
 
-        <>
+        <img src="./코딩테스트/코테 이미지/기본 화면.png" width="550">
 
     1. `게시글 목록` 화면
         - 게시글을 테이블 형식으로 나열
@@ -1130,9 +1257,6 @@
         <img src="./코딩테스트/코테 이미지/게시글작성.png" width="550">
 
 
-## 15일차
-
-### 전체 마무리
 
 
 

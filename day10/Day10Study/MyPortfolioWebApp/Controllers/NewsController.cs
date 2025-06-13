@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyPortfolioWebApp.Models;
+using System.Diagnostics;
 
 namespace MyPortfolioWebApp.Controllers
 {
@@ -108,13 +109,39 @@ namespace MyPortfolioWebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // <form asp-controller="News" asp-action="Create"> 이 http://localhost:5234/News/Create 포스트메서드 호출
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] News news)
+        // News 모델에 저장하는 것은 파일 경로
+        // IFormFile? UploadFile에는 파일 자체 바이너리 데이터
+        public async Task<IActionResult> Create([Bind("Id,Title,Description")] News news, IFormFile? UploadFile)
         { 
             if (ModelState.IsValid)
             {
+                // 파일이 존재하면
+                if (UploadFile != null && UploadFile.Length > 0)
+                {
+                    // 서버에 파일저장, 모델에 파일경로 저장
+                    Debug.WriteLine(UploadFile.Length);
+
+                    string upFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "upload");
+                    Directory.CreateDirectory(upFolder); // 폴더가 없으면 생성
+
+                    // exaple.jpg파일이 여러번 올라가면 파일이 겹쳐짐
+                    // 파일명을 변경
+                    // Guid.NewGuid() = 랜덤아이디 생성
+                    // Path.GetExetension() = 파일의 확장자만 가져옴 .jpg
+                    string newFileName = Guid.NewGuid() + Path.GetExtension(UploadFile.FileName);   // 21213-21312-123-1-2111.jpg
+                    string filePath = Path.Combine(upFolder, newFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await UploadFile.CopyToAsync(stream);   // 파일저장
+                    }
+
+                    // 모델에 파일명 할당
+                    news.UploadFile = newFileName;
+                }
                 news.Writer = "관리자"; // 작성자는 자동으로 관리자
                 news.PostDate = DateTime.Now; // 게시일자는 현재
-                news.ReadCount = 0; 
+                news.ReadCount = 0;
 
                 // INSERT INTO...
                 _context.Add(news);
@@ -123,6 +150,7 @@ namespace MyPortfolioWebApp.Controllers
 
                 TempData["success"] = "뉴스 저장 성공!";
                 return RedirectToAction(nameof(Index));
+                
             }
             return View(news);
         }
