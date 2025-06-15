@@ -20,8 +20,9 @@ namespace MyPortfolioWebApp
 
             builder.WebHost.ConfigureKestrel(options =>
             {
-                options.
-            })
+                // 1024(MB), 1024(KB)
+                options.Limits.MaxRequestBodySize = 200 * 1024 * 1024;
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
